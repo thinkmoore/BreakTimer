@@ -1,0 +1,13 @@
+{
+  "name": "BreakPlease",
+  "developer": {
+    "name": "Scott Moore",
+    "url": "http://thinkmoore.net/breakplease"
+  },
+  "description": "Make sure you take a break!",
+  "icons": {
+    "128": "/img/icon.png"
+  },
+  "launch_path": "/index.html",
+  "default_locale": "en"
+}
