@@ -204,7 +204,7 @@
     var manifestUrl = "http://thinkmoore.net/BreakTimer/manifest.webapp";
 
     $(document).ready(function() {
-      if (!(typeof navigator === "undefined")) {
+      if (!(typeof navigator.mozApps === "undefined")) {
       var request = navigator.mozApps.getSelf();
       request.onsuccess = function() {
         if (!request.result) {
