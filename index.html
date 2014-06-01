@@ -99,6 +99,7 @@
     };
 
     var refreshState = function() {
+      timer.stop();
       if (state === "work") {
         $("#breakLight").removeClass("lightOn").addClass("lightOff");
         $("#workLight").removeClass("lightOff").addClass("lightOn");
