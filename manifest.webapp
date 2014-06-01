@@ -1,8 +1,8 @@
 {
-  "name": "BreakPlease",
+  "name": "BreakTimer",
   "developer": {
     "name": "Scott Moore",
-    "url": "http://thinkmoore.net/breakplease"
+    "url": "http://thinkmoore.net/BreakTimer"
   },
   "description": "Make sure you take a break!",
   "icons": {
