@@ -204,19 +204,15 @@
     var gManifestName = "/manifest.webapp";
 
     $(document).ready(function() {
-      console.log("requesting...");
       var request = navigator.mozApps.getSelf();
       request.onsuccess = function() {
         if (request.result) {
-          console.log("Already installed!");
         } else {
           // not installed
-          console.log("Not installed!");
           $("#install").removeClass("hidden").show();
           $("#install").click(function() {
             var req = navigator.mozApps.install(gManifestName);
             req.onsuccess = function() {
-              console.log("Installed successfully");
               $("#install").remove();
             }
             req.onerror = function(errObj) {
