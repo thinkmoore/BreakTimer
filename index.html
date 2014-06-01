@@ -204,6 +204,7 @@
     var manifestUrl = "http://thinkmoore.net/BreakTimer/manifest.webapp";
 
     $(document).ready(function() {
+      if !(typeof navigator === "undefined") {
       var request = navigator.mozApps.getSelf();
       request.onsuccess = function() {
         if (!request.result) {
@@ -226,6 +227,7 @@
       request.onerror = function() {
         console.log('Error checking installation status: ' + this.error.message);
       };
+      }
     });
   })();
   </script>
