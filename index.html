@@ -210,12 +210,12 @@
           console.log("Already installed!");
         } else {
           // not installed
-          $("#install_button").show();
-          $("#install_button").click(function() {
+          $("#install").show();
+          $("#install").click(function() {
             var req = navigator.mozApps.install(gManifestName);
             req.onsuccess = function() {
               console.log("Installed successfully");
-              $("#install_button").remove();
+              $("#install").remove();
             }
             req.onerror = function(errObj) {
               console.log("Failed to install install (" + errObj.code + ") " + errObj.message);
