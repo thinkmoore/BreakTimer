@@ -212,7 +212,7 @@
         } else {
           // not installed
           console.log("Not installed!");
-          $("#install").show();
+          $("#install").removeClass("hidden").show();
           $("#install").click(function() {
             var req = navigator.mozApps.install(gManifestName);
             req.onsuccess = function() {
