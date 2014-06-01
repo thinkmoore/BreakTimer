@@ -151,7 +151,7 @@
 
     var pauseTimer = function() {
       timer.pause();
-      $("#ctrl").html("Start");
+      $("#ctrl").html("Resume");
       $("#ctrl").unbind("click");
       $("#ctrl").click(startTimer);
       return false;
