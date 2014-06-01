@@ -206,18 +206,19 @@
     $(document).ready(function() {
       var request = navigator.mozApps.getSelf();
       request.onsuccess = function() {
-        if (request.result) {
-        } else {
+        if (!request.result) {
           // not installed
           $("#install").removeClass("hidden").show();
           $("#install").click(function() {
-            var req = navigator.mozApps.install(gManifestName);
-            req.onsuccess = function() {
+            var request = window.navigator.mozApps.install(manifestUrl);
+            request.onsuccess = function () {
               $("#install").remove();
-            }
-            req.onerror = function(errObj) {
-              console.log("Failed to install (" + errObj.code + ") " + errObj.message);
-            }
+              alert('Installation successful!');
+            };
+            request.onerror = function () {
+              // Display the error information from the DOMError object
+              alert('Install failed, error: ' + this.error.name);
+            };
           });
         }
       };
