@@ -46,7 +46,7 @@
       <a href="#" class="button" id="ok">Okay</a>
     </div>
   </div>
-  <a href="#" class="button" id="install">Install Me!</a>
+  <a href="#" class="button hidden" id="install">Install Me!</a>
 </body>
 
 <script src="js/jquery-2.1.1.js"></script>
@@ -97,28 +97,41 @@
       $(".timer #min").html((minutes < 10 ? "0" : "") + minutes);
       $(".timer #sec").html((seconds < 10 ? "0" : "") + seconds);
     };
-    update(workMin,0);
-    var alarm = function() {
-      playSound(beepBuffer);
+
+    var refreshState = function() {
       if (state === "work") {
-        state = "break";
-        $("#workLight").removeClass("lightOn").addClass("lightOff");
-        $("#breakLight").removeClass("lightOff").addClass("lightOn");
-        timer = Timer.makeTimer(breakMin,0,update,alarm);
-        timer.start();
-      } else {
-        state = "work";
         $("#breakLight").removeClass("lightOn").addClass("lightOff");
         $("#workLight").removeClass("lightOff").addClass("lightOn");
         timer = Timer.makeTimer(workMin,0,update,alarm);
+        update(workMin,0);
+      } else {
+        $("#workLight").removeClass("lightOn").addClass("lightOff");
+        $("#breakLight").removeClass("lightOff").addClass("lightOn");
+        timer = Timer.makeTimer(breakMin,0,update,alarm);
+      }
+    }
+
+    var setState = function(st) {
+      state = st;
+      refreshState();
+    };
+
+    setState("work");
+
+    var alarm = function() {
+      playSound(beepBuffer);
+      if (state === "work") {
+        setState("break");
+        timer.start();
+      } else {
+        setState("work");
         timer.start();
       }
     };
 
-    var timer = Timer.makeTimer(workMin,0,update,alarm);
-
     var stopTimer = function() {
       timer.stop();
+      setState("work");
       $("#ctrl").html("Start");
       $("#ctrl").unbind("click");
       $("#ctrl").click(startTimer);
@@ -148,7 +161,32 @@
     $("#pause").click(pauseTimer);
 
     $("#settings").click(function () {
+      $("#onTask").val(workMin);
+      $("#onBreak").val(breakMin);
+      $(".warning").remove();
       $(".pane").slideToggle();
+    });
+
+    $("#ok").click(function () {
+      $(".warning").remove();
+      var newWork = parseInt($("#onTask").val());
+      var newBreak = parseInt($("#onBreak").val());
+
+      if (!(0 < newWork && newWork < 61)) {
+        $(".pane").append(
+          "<div class='warning'>Minutes on task must be a number between 1 and 60!</div>");
+        return false;
+      }
+      if (!(0 < newBreak && newBreak < 61)) {
+        $(".pane").append(
+          "<div class='warning'>Minutes on break must be a number between 1 and 60!</div>");
+        return false;
+      }
+
+      workMin = newWork;
+      breakMin = newBreak;
+
+      refreshState();
     });
   })();
   </script>

@@ -176,8 +176,31 @@ body {
 label {
   width: 80%;
   float: left;
+  padding-top: 0.5rem;
 }
 
 input {
   width: 15%;
+  font-family: 'Crystal', sans-serif;
+  font-size: 2rem;
+  padding: 0.5rem 0.2rem 0.5rem 0.2rem;
+  text-align: right;
+  vertical-align: middle;
+
+  background-color: #FAEBD7;
+  color: #000000;
+
+  -moz-border-radius: 1rem;
+  border-radius: 1rem;
+
+  box-shadow: inset #CDB38B 0 0.5rem 0 0;
+  -moz-box-shadow: inset #CDB38B 0 0.5rem 0 0;
+  -webkit-box-shadow: inset #CDB38B 0 0.5rem 0 0;
+}
+
+.warning {
+  font-family: 'FiraSans-Regular', sans-serif;
+  font-size: 1.5em;
+
+  color: #ff0000;
 }
