@@ -6,7 +6,7 @@
   },
   "description": "Make sure you take a break!",
   "icons": {
-    "128": "/BreakTimer/icon.png"
+    "60": "/BreakTimer/icon.png"
   },
   "launch_path": "/BreakTimer/index.html",
   "default_locale": "en"
