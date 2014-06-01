@@ -30,7 +30,7 @@
     <a href="#" class="button" id="pause">Pause</a>
     <a href="#" class="button" id="settings">Settings</a>
     </div>
-    <div class="pane">
+    <div class="pane" style="display:none">
       <p>
         <label for="onTask">Minutes on task:</label>
         <input type="text" id="onTask" />
@@ -131,6 +131,10 @@
 
     $("#ctrl").click(startTimer);
     $("#pause").click(pauseTimer);
+
+    $("#settings").click(function () {
+      $(".pane").slideToggle();
+    });
   })();
   </script>
   <script>
