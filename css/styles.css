@@ -84,7 +84,7 @@ body {
 }
 
 .raised {
-  margin: 2rem auto;
+  margin: 1rem auto 2rem auto;
   padding: 2rem;
   background-color: #50A6C2;
   color: #000000;
@@ -95,6 +95,32 @@ body {
   box-shadow: #325C74 0 1rem 0 0;
   -moz-box-shadow: #325C74 0 1rem 0 0;
   -webkit-box-shadow: #325C74 0 1rem 0 0;
+}
+
+#header {
+  margin: 0rem auto;
+  padding: 1rem 2rem 1rem 2rem;
+  text-align: center;
+}
+
+#header div {
+  display: inline-block;
+  margin: auto 2rem;
+
+  font-family: 'FiraSansMedium', sans-serif;
+  font-size: 1.5rem;
+  font-size: 1.8rem;
+  font-style:normal;
+}
+
+#header .lightOn {
+  color: #ffffff;
+  text-shadow: -1px -1px 0 #4D4D4D;
+}
+
+#header .lightOff {
+  color: #999999;
+  text-shadow: -1px -1px 0 #4D4D4D;
 }
 
 .timer {
