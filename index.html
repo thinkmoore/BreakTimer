@@ -204,6 +204,7 @@
     var gManifestName = "/manifest.webapp";
 
     $(document).ready(function() {
+      console.log("requesting...");
       var request = navigator.mozApps.getSelf();
       request.onsuccess = function() {
         if (request.result) {
@@ -222,11 +223,11 @@
             }
           });
         }
-      }
+      };
       request.onerror = function() {
         console.log('Error checking installation status: ' + this.error.message);
-      }
-    }
-  )})();
+      };
+    });
+  })();
   </script>
   </html>
