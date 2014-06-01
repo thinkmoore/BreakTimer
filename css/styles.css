@@ -44,13 +44,10 @@ body {
   text-shadow: -1px -1px 0 #4D4D4D;
 }
 
-.button:hover {
-  background-color: #63D1F4;
-}
-
 .button:active {
-	position:relative;
-	top:1px;
+  position:relative;
+  top: 1rem;
+  box-shadow: none;
 }
 
 .hidden {

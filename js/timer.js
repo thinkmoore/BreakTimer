@@ -21,11 +21,9 @@ var Timer = (function () {
         next.setTime(remaining);
         update(next.getMinutes(),next.getSeconds());
         timeout = window.setTimeout(doUpdate, next.getMilliseconds());
-        console.log("Next timeout is " + timeout);
       }
     };
     var stop = function() {
-      console.log("Stopping timeout " + timeout);
       window.clearTimeout(timeout);
       remaining = ((60 * min) + sec) * 1000;
     };

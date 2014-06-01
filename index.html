@@ -5,10 +5,10 @@
   <title>Break Timer</title>
 
   <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
-    <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
 
-    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-    <link rel="apple-touch-icon" href="/img/icon.png"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <link rel="apple-touch-icon" href="/img/icon.png"/>
 
   <link rel="stylesheet" href="css/util.css">
   <link rel="stylesheet" href="css/styles.css">
@@ -17,13 +17,13 @@
 <body>
   <div class="content">
     <div class="raised">
-    <div class="timer">
-      <ul>
-        <li id="min"></li>
-        <li id="point">:</li>
-        <li id="sec"></li>
-      </ul>
-    </div>
+      <div class="timer">
+        <ul>
+          <li id="min"></li>
+          <li id="point">:</li>
+          <li id="sec"></li>
+        </ul>
+      </div>
     </div>
     <a href="#" class="button" id="ctrl">Start</a>
     <a href="#" class="button" id="pause">Pause</a>
@@ -36,78 +36,101 @@
 <script src="js/timer.js"></script>
 <script>
 (function () {
-  var min = 1;
-  var sec = 0;
+  window.AudioContext = window.AudioContext || window.webkitAudioContext;
 
-  var update = function(minutes,seconds) {
-    $(".timer #min").html((minutes < 10 ? "0" : "") + minutes);
-    $(".timer #sec").html((seconds < 10 ? "0" : "") + seconds);
-  };
-  update(min,sec);
-  var alarm = function() {
-    console.log("BEEP!");
-  };
+  var audioContext = new AudioContext();
+  var beepBuffer;
 
-  var timer = Timer.makeTimer(1,0,update,alarm);
+  function loadBeep() {
+    var request = new XMLHttpRequest();
+    request.open('GET', "audio/beep.wav", true);
+    request.responseType = 'arraybuffer';
 
-  var stopTimer = function() {
-    timer.stop();
-    $("#ctrl").html("Start");
-    $("#ctrl").unbind("click");
-    $("#ctrl").click(startTimer);
-    return false;
-  };
-
-  var startTimer = function() {
-    timer.start();
-    $("#ctrl").html("Stop");
-    $("#ctrl").unbind("click");
-    $("#ctrl").click(stopTimer);
-    return false;
-  };
-
-  var pauseTimer = function() {
-    timer.pause();
-    $("#ctrl").html("Start");
-    $("#ctrl").unbind("click");
-    $("#ctrl").click(startTimer);
-    return false;
-  };
-
-  $("#ctrl").click(startTimer);
-  $("#pause").click(pauseTimer);
-})();
-</script>
-<script>
-(function () {
-  "use strict";
-  var gManifestName = "/manifest.webapp";
-
-  $(document).ready(function() {
-    var request = navigator.mozApps.getSelf();
-    request.onsuccess = function() {
-      if (request.result) {
-        console.log("Already installed!");
-      } else {
-        // not installed
-        $("#install_button").show();
-        $("#install_button").click(function() {
-          var req = navigator.mozApps.install(gManifestName);
-          req.onsuccess = function() {
-            console.log("Installed successfully");
-            $("#install_button").remove();
-          }
-          req.onerror = function(errObj) {
-            console.log("Failed to install install (" + errObj.code + ") " + errObj.message);
-          }
+    // Decode asynchronously
+    request.onload = function() {
+      audioContext.decodeAudioData(request.response,
+        function(buffer) {
+          beepBuffer = buffer;
         });
+      };
+      request.send();
+    };
+    loadBeep();
+
+    var min = 0;
+    var sec = 10;
+
+    var update = function(minutes,seconds) {
+      $(".timer #min").html((minutes < 10 ? "0" : "") + minutes);
+      $(".timer #sec").html((seconds < 10 ? "0" : "") + seconds);
+    };
+    update(min,sec);
+    var alarm = function() {
+      var source = audioContext.createBufferSource();
+      source.buffer = beepBuffer;
+      source.connect(audioContext.destination);
+      source.start(0);
+    };
+
+    var timer = Timer.makeTimer(min,sec,update,alarm);
+
+    var stopTimer = function() {
+      timer.stop();
+      $("#ctrl").html("Start");
+      $("#ctrl").unbind("click");
+      $("#ctrl").click(startTimer);
+      return false;
+    };
+
+    var startTimer = function() {
+      timer.start();
+      $("#ctrl").html("Stop");
+      $("#ctrl").unbind("click");
+      $("#ctrl").click(stopTimer);
+      return false;
+    };
+
+    var pauseTimer = function() {
+      timer.pause();
+      $("#ctrl").html("Start");
+      $("#ctrl").unbind("click");
+      $("#ctrl").click(startTimer);
+      return false;
+    };
+
+    $("#ctrl").click(startTimer);
+    $("#pause").click(pauseTimer);
+  })();
+  </script>
+  <script>
+  (function () {
+    "use strict";
+    var gManifestName = "/manifest.webapp";
+
+    $(document).ready(function() {
+      var request = navigator.mozApps.getSelf();
+      request.onsuccess = function() {
+        if (request.result) {
+          console.log("Already installed!");
+        } else {
+          // not installed
+          $("#install_button").show();
+          $("#install_button").click(function() {
+            var req = navigator.mozApps.install(gManifestName);
+            req.onsuccess = function() {
+              console.log("Installed successfully");
+              $("#install_button").remove();
+            }
+            req.onerror = function(errObj) {
+              console.log("Failed to install install (" + errObj.code + ") " + errObj.message);
+            }
+          });
+        }
+      }
+      request.onerror = function() {
+        console.log('Error checking installation status: ' + this.error.message);
       }
     }
-    request.onerror = function() {
-      console.log('Error checking installation status: ' + this.error.message);
-    }
-  }
-)})();
-</script>
-
-</html>
+  )})();
+  </script>
+  </html>
