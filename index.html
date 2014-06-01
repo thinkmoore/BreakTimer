@@ -25,10 +25,23 @@
         </ul>
       </div>
     </div>
+    <div class="buttons">
     <a href="#" class="button" id="ctrl">Start</a>
     <a href="#" class="button" id="pause">Pause</a>
-    <a href="#" class="button hidden" id="install">Install</a>
+    <a href="#" class="button" id="settings">Settings</a>
+    </div>
+    <div class="pane">
+      <p>
+        <label for="onTask">Minutes on task:</label>
+        <input type="text" id="onTask" />
+      </p>
+      <p>
+        <label for="onBreak">Minutes on break:</label>
+        <input type="text" id="onBreak" />
+      </p>
+    </div>
   </div>
+  <a href="#" class="button" id="install">Install Me!</a>
 </body>
 
 <script src="js/jquery-2.1.1.js"></script>
@@ -81,6 +94,9 @@
     update(min,sec);
     var alarm = function() {
       playSound(beepBuffer);
+      $("#ctrl").html("Start");
+      $("#ctrl").unbind("click");
+      $("#ctrl").click(startTimer);
     };
 
     var timer = Timer.makeTimer(min,sec,update,alarm);
