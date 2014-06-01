@@ -168,6 +168,7 @@
       $("#onBreak").val(breakMin);
       $(".warning").remove();
       $(".pane").slideToggle();
+      return false;
     });
 
     $("#ok").click(function () {
@@ -193,6 +194,7 @@
         refreshState();
       }
       $(".pane").slideUp();
+      return false;
     });
   })();
   </script>
