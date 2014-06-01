@@ -41,6 +41,20 @@
   var audioContext = new AudioContext();
   var beepBuffer;
 
+  function playSound(buffer, volume) {
+    source = audioContext.createBufferSource();
+    source.buffer = buffer;
+    if (typeof volume === "number") {
+      var gainNode = audioContext.createGain();
+      gainNode.gain.value = volume;
+      gainNode.connect(audioContext.destination);
+      source.connect(gainNode);
+    } else {
+      source.connect(audioContext.destination);
+    }
+    source.start(0);
+  };
+
   function loadBeep() {
     var request = new XMLHttpRequest();
     request.open('GET', "audio/beep.wav", true);
@@ -66,10 +80,7 @@
     };
     update(min,sec);
     var alarm = function() {
-      var source = audioContext.createBufferSource();
-      source.buffer = beepBuffer;
-      source.connect(audioContext.destination);
-      source.start(0);
+      playSound(beepBuffer);
     };
 
     var timer = Timer.makeTimer(min,sec,update,alarm);
@@ -83,6 +94,9 @@
     };
 
     var startTimer = function() {
+      // Convince Apple to let use play sounds
+      playSound(beepBuffer, 0);
+
       timer.start();
       $("#ctrl").html("Stop");
       $("#ctrl").unbind("click");
