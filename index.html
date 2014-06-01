@@ -17,8 +17,8 @@
 <body>
   <div class="content">
     <div class="raised" id="header">
-      <div id="work" class="lightOn">Work</div>
-      <div id="break" class="lightOff">Break</div>
+      <div id="workLight" class="lightOn">Work</div>
+      <div id="breakLight" class="lightOff">Break</div>
     </div>
     <div class="raised">
       <div class="timer">
@@ -89,22 +89,33 @@
     };
     loadBeep();
 
-    var min = 0;
-    var sec = 10;
+    var workMin = 1;
+    var breakMin = 1;
+    var state = "work";
 
     var update = function(minutes,seconds) {
       $(".timer #min").html((minutes < 10 ? "0" : "") + minutes);
       $(".timer #sec").html((seconds < 10 ? "0" : "") + seconds);
     };
-    update(min,sec);
+    update(workMin,0);
     var alarm = function() {
       playSound(beepBuffer);
-      $("#ctrl").html("Start");
-      $("#ctrl").unbind("click");
-      $("#ctrl").click(startTimer);
+      if (state === "work") {
+        state = "break";
+        $("#workLight").removeClass("lightOn").addClass("lightOff");
+        $("#breakLight").removeClass("lightOff").addClass("lightOn");
+        timer = Timer.makeTimer(breakMin,0,update,alarm);
+        timer.start();
+      } else {
+        state = "work";
+        $("#breakLight").removeClass("lightOn").addClass("lightOff");
+        $("#workLight").removeClass("lightOff").addClass("lightOn");
+        timer = Timer.makeTimer(workMin,0,update,alarm);
+        timer.start();
+      }
     };
 
-    var timer = Timer.makeTimer(min,sec,update,alarm);
+    var timer = Timer.makeTimer(workMin,0,update,alarm);
 
     var stopTimer = function() {
       timer.stop();
