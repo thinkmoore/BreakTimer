@@ -211,6 +211,7 @@
           console.log("Already installed!");
         } else {
           // not installed
+          console.log("Not installed!");
           $("#install").show();
           $("#install").click(function() {
             var req = navigator.mozApps.install(gManifestName);
