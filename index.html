@@ -100,7 +100,7 @@
     };
 
     var refreshState = function() {
-      if (timer) timer.stop();
+      if (!(typeof timer === "undefined")) timer.stop();
       if (state === "work") {
         $("#breakLight").removeClass("lightOn").addClass("lightOff");
         $("#workLight").removeClass("lightOff").addClass("lightOn");
@@ -192,6 +192,7 @@
       if (stopped) {
         refreshState();
       }
+      $(".pane").slideUp();
     });
   })();
   </script>
