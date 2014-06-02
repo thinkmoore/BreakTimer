@@ -51,6 +51,7 @@
 
 <script src="js/jquery-2.1.1.js"></script>
 <script src="https://myapps.mozillalabs.com/jsapi/include.js"></script>
+<script src="js/inneractive.js"></script>
 <script src="js/timer.js"></script>
 <script>
 (function () {
@@ -230,5 +231,16 @@
       }
     });
   })();
+  </script>
+  <script>
+(function () {
+  var ad = Inneractive.createAd({
+    APP_ID: "thinkmoore_BreakTimer_other",
+    TYPE: "Banner",
+    REFRESH_RATE: 30
+  });
+  ad.placement("bottom","center");
+  ad.addTo(document.body);
+})();
   </script>
   </html>
