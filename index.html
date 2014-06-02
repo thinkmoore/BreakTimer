@@ -197,6 +197,14 @@
       $(".pane").slideUp();
       return false;
     });
+
+    var ad = Inneractive.createAd({
+      APP_ID: "thinkmoore_BreakTimer_other",
+      TYPE: "Banner",
+      REFRESH_RATE: 30
+    });
+    ad.placement("bottom","center");
+    ad.addTo(document.body);
   })();
   </script>
   <script>
@@ -231,16 +239,5 @@
       }
     });
   })();
-  </script>
-  <script>
-(function () {
-  var ad = Inneractive.createAd({
-    APP_ID: "thinkmoore_BreakTimer_other",
-    TYPE: "Banner",
-    REFRESH_RATE: 30
-  });
-  ad.placement("bottom","center");
-  ad.addTo(document.body);
-})();
   </script>
   </html>
