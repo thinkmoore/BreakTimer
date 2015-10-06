@@ -50,7 +50,6 @@
 </body>
 
 <script src="js/jquery-2.1.1.js"></script>
-<script src="https://myapps.mozillalabs.com/jsapi/include.js"></script>
 <script src="js/inneractive.js"></script>
 <script src="js/timer.js"></script>
 <script>
@@ -197,47 +196,5 @@
       $(".pane").slideUp();
       return false;
     });
-
-    var ad = Inneractive.createAd({
-      APP_ID: "thinkmoore_BreakTimer_other",
-      TYPE: "Banner",
-      REFRESH_RATE: 30
-    });
-    ad.placement("bottom","center");
-    ad.addTo(document.body);
-  })();
-  </script>
-  <script>
-  (function () {
-    "use strict";
-    var manifestUrl = "http://thinkmoore.net/BreakTimer/manifest.webapp";
-
-    $(document).ready(function() {
-      if (!(typeof navigator.mozApps === "undefined")) {
-      var request = navigator.mozApps.getSelf();
-      request.onsuccess = function() {
-        if (!request.result) {
-          // not installed
-          $("#install").removeClass("hidden").show();
-          $("#install").click(function() {
-            var request = window.navigator.mozApps.install(manifestUrl);
-            request.onsuccess = function () {
-              $("#install").remove();
-              alert('Installation successful!');
-            };
-            request.onerror = function () {
-              // Display the error information from the DOMError object
-              alert('Install failed, error: ' + this.error.name);
-            };
-            return false;
-          });
-        }
-      };
-      request.onerror = function() {
-        console.log('Error checking installation status: ' + this.error.message);
-      };
-      }
-    });
-  })();
   </script>
   </html>
